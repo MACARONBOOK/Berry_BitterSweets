@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
 
+  # 顧客用(customrers/sign_in)
   devise_for :customers,skip: [:passwords], controllers: {
-  registrations: "public/registrations",
-  sessions: 'public/sessions'
- }
+    registrations: "public/registrations",
+    sessions: 'public/sessions'
+  }
+  # 管理者用(admin/sign_in)
+  devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
+    sessions: "admin/sessions"
+  }
 
   scope module: :public do
     root to: "homes#top"
@@ -17,7 +22,6 @@ Rails.application.routes.draw do
       patch "withdraw"
       put "/users/:id/hide" => "users#hide", as: 'users_hide'
     end
-
 
     resources :cart_items, only: [:index, :update, :destroy, :create] do
       collection do
@@ -35,9 +39,6 @@ Rails.application.routes.draw do
     resources :shipping_addresses, only: [:index, :edit, :create, :update, :destroy]
   end
 
-  devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
-  sessions: "admin/sessions"
- }
 
   namespace :admin do
     root to: "homes#top"
@@ -48,4 +49,5 @@ Rails.application.routes.draw do
     resources :order_items, only: [:update]
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
 end

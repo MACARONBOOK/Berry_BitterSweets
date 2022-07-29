@@ -69,13 +69,13 @@ ActiveRecord::Schema.define(version: 2022_07_21_121704) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "last_name", null: false
-    t.string "first_name", null: false
-    t.string "last_name_kana", null: false
-    t.string "first_name_kana", null: false
-    t.string "phone_number", null: false
-    t.string "address", null: false
-    t.string "post_code", null: false
+    t.string "last_name", default: "", null: false
+    t.string "first_name", default: "", null: false
+    t.string "last_name_kana", default: "", null: false
+    t.string "first_name_kana", default: "", null: false
+    t.string "phone_number", default: "", null: false
+    t.string "address", default: "", null: false
+    t.string "post_code", default: "", null: false
     t.boolean "is_deleted", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -117,9 +117,9 @@ ActiveRecord::Schema.define(version: 2022_07_21_121704) do
 
   create_table "orders", force: :cascade do |t|
     t.integer "customer_id"
-    t.string "name", null: false
-    t.string "post_code", null: false
-    t.string "address", null: false
+    t.string "name", default: "", null: false
+    t.string "post_code", default: "", null: false
+    t.string "address", default: "", null: false
     t.integer "shipping_cost", null: false
     t.integer "total_payment", null: false
     t.integer "payment_method", default: 0, null: false
@@ -127,16 +127,18 @@ ActiveRecord::Schema.define(version: 2022_07_21_121704) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.index ["id"], name: "index_orders_on_id", unique: true
   end
 
   create_table "shipping_addresses", force: :cascade do |t|
     t.integer "customer_id"
-    t.string "post_code", null: false
-    t.string "address", null: false
-    t.string "name", null: false
+    t.string "post_code", default: "", null: false
+    t.string "address", default: "", null: false
+    t.string "name", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["customer_id"], name: "index_shipping_addresses_on_customer_id"
+    t.index ["id"], name: "index_shipping_addresses_on_id", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

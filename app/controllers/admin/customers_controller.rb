@@ -1,6 +1,7 @@
 class AdminCustomersController < ApplicationController
   def index
-   @customers = Customer.all
+   @customer = Customer.all
+   @customers = Customer.all.page(params[:page]).per(10)
   end
 
   def show
@@ -14,6 +15,7 @@ class AdminCustomersController < ApplicationController
   def update
    @customer = Customer.find(params[:id])
    if @customer.update(customer_params)
+     flash[:notice] = "You have Update User successfully."
      redirect_to admin_customer_path(@customer)
    else
      render :edit
@@ -21,6 +23,7 @@ class AdminCustomersController < ApplicationController
   end
 
   private
+
   def customer_params
     params.require(:customer).permit(:authenticity_token, :first_name, :last_name, :first_name_kana, :last_name_kana, :post_code, :address, :email, :phone_number,  :is_deleted )
   end

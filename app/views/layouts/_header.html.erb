@@ -1,14 +1,14 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-info bg-info">
    <div class="container px-5">
      <!-- navbarの左側 -->
      <div class="row">
          <!-- 仮の画像を配置 -->
-         <a class="navbar-brand p-3" href="/">NaganoCake<br>
-           <img  src="/assets/logo3.png" alt="..." width="120px" height="80px" />
+         <a class="navbar-brand p-3" href="/">
+           <img  src="/assets/bs_cakelogo.png" alt="..." width="120px" height="120px" />
          </a>
      </div>
          <% if customer_signed_in? %>
-           <span class="navbar-text offset-1 text-white bg-dark">
+           <span class="navbar-text offset-1 text-white bg-info">
              ようこそ、<%= current_customer.last_name %>さん！
            </span>
          <% end%>

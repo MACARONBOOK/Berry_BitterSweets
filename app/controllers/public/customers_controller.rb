@@ -1,4 +1,4 @@
-class PublicCustomersController < ApplicationController
+class Public::CustomersController < ApplicationController
   def show
     @customer = current_customer
   end
@@ -9,8 +9,12 @@ class PublicCustomersController < ApplicationController
 
   def update
      @customer = current_customer
-     @customer.update(customer_params)
-     redirect_to my_page_customers_path(current_customer)
+     if @customer.update(customer_params)
+      flash[:notice] = "You have Update User successfully."
+      redirect_to my_page_customers_path(current_customer)
+     else
+      render :edit
+     end
   end
 
   def confirm
@@ -28,8 +32,7 @@ class PublicCustomersController < ApplicationController
 
   private
   def customer_params
-    params.require(:customer).permit(:is_deleted, :last_name, :first_name, :last_name_kana, :first_name_kana,
-                                     :email, :post_code, :address, :phone_number)
+    params.require(:customer).permit(:is_deleted, :last_name, :first_name, :last_name_kana,:first_name_kana,:email, :post_code, :address, :phone_number)
   end
 
 end
