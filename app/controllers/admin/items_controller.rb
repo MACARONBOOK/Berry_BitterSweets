@@ -5,19 +5,21 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-    @genres = Genre.all
     if @item.save
       redirect_to admin_item_path(@item)
+    else
+      render :new
     end
   end
 
   def show
     @item = Item.find(params[:id])
-
   end
 
   def index
-    @items = Item.all
+    @items = Item.page(params[:page])
+    # (全-件)のcount
+    @items_count = Item.where(sales_status:"sale").count
   end
 
   def edit
@@ -28,6 +30,8 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     if @item.update(item_params)
       redirect_to admin_item_path(@item)
+    else
+      render :edit
     end
   end
 
