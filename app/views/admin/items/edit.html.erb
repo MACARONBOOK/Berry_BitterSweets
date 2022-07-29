@@ -1,2 +1,48 @@
-<h1>Items#edit</h1>
-<p>Find me in app/views/items/edit.html.erb</p>
+<div class="container mt-5">
+
+  <div class="h4 col-sm-2 p-3 bg-light text-center">商品編集</div>
+
+  <div class="row-lg">
+    <div class="col-lg offset-3">
+      <%= form_with model: @item, url: admin_item_path(@item.id), mehod: :patch do |f| %>
+        <table class="new-item-form">
+          <tbody>
+            <tr class="my-3">
+              <th>画像</th>
+              <td><%= f.file_field :image, accept: "image/*" %></td>
+            </tr>
+
+            <tr class="my-3">
+              <th>商品名</th>
+              <td><%= f.text_field :name, class: "form-control" %></td>
+            </tr>
+
+            <tr class="my-3">
+              <th>商品説明</th>
+              <td><%= f.text_area :introduction, placeholder: "ここに説明文を記述します" %></td>
+            </tr>
+
+            <tr class="my-3">
+              <th>ジャンル</th>
+              <td><%= f.collection_select :genre_id, Genre.all ,:id, :name, include_blank: "--選択してください--" %></td>
+            </tr>
+
+            <tr class="my-3">
+              <th>税抜価格</th>
+              <td><%= f.text_field :price %>円</td>
+            </tr>
+
+            <tr class="my-3">
+              <th>販売ステータス</th>
+              <td><%= f.select :sales_status, [["販売中","sale"], ["売切れ","stop_selling"]], include_blank: "--選択してください--" %></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="offset-1">
+　        <%= f.submit '変更を保存' , class: 'btn btn-success'  %>
+　      </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>
